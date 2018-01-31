@@ -11,7 +11,6 @@ def is_alert_present(wd):
     except:
         return False
 
-
 class test_add_group(unittest.TestCase):
     def setUp(self):
         self.wd = WebDriver(capabilities={"marionette": False})
@@ -22,8 +21,6 @@ class test_add_group(unittest.TestCase):
         wd = self.wd
         wd.get("http://localhost/addressbook/")
         wd.find_element_by_name("pass").click()
-        wd.find_element_by_name("pass").send_keys("\\undefined")
-        wd.find_element_by_name("user").click()
         wd.find_element_by_name("user").clear()
         wd.find_element_by_name("user").send_keys("admin")
         wd.find_element_by_id("LoginForm").click()
@@ -46,10 +43,6 @@ class test_add_group(unittest.TestCase):
         wd.find_element_by_link_text("groups").click()
         wd.find_element_by_css_selector("span.group").click()
         wd.find_element_by_link_text("Logout").click()
-        wd.find_element_by_name("pass").click()
-        wd.find_element_by_name("pass").send_keys("\\undefined")
-        wd.find_element_by_name("user").click()
-        wd.find_element_by_name("user").send_keys("\\undefined")
         self.assertTrue(success)
     
     def tearDown(self):
