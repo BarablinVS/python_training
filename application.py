@@ -1,6 +1,5 @@
-__author__ = 'viktor'
-
 from selenium.webdriver.firefox.webdriver import WebDriver
+__author__ = 'viktor'
 
 
 class Application:
@@ -29,23 +28,19 @@ class Application:
         wd.find_element_by_name("mobile").send_keys(contact.mobile_number)
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
 
-
     def open_contact_page(self):
         wd = self.wd
         wd.find_element_by_link_text("add new").click()
 
-
     def logout(self):
         wd = self.wd
         wd.find_element_by_link_text("Logout").click()
-
 
     def return_to_groups_page(self):
         wd = self.wd
         # return to groups page
         wd.find_element_by_link_text("groups").click()
         wd.find_element_by_css_selector("span.group").click()
-
 
     def create_group(self, group):
         wd = self.wd
@@ -66,11 +61,9 @@ class Application:
         wd.find_element_by_name("submit").click()
         self.return_to_groups_page()
 
-
     def open_groups_page(self):
         wd = self.wd
         wd.find_element_by_link_text("groups").click()
-
 
     def login(self, username, password):
         wd = self.wd
@@ -84,11 +77,9 @@ class Application:
         wd.find_element_by_name("pass").send_keys(password)
         wd.find_element_by_xpath("//form[@id='LoginForm']/input[3]").click()
 
-
     def open_home_page(self):
         wd = self.wd
         wd.get("http://localhost/addressbook/")
-
 
     def destroy(self):
         self.wd.quit()
