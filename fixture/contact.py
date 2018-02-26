@@ -8,11 +8,16 @@ class ContactHelper:
 
     def open_contact_page(self):
         wd = self.app.wd
-        wd.find_element_by_link_text("add new").click()
+        if not (wd.current_url.endswith("addressbook/")):
+            wd.find_element_by_link_text("home").click()
+
+#    def open_add_contact_page(self):
+#       wd = self.app.wd
+#        wd.find_element_by_link_text("add new").click()
 
     def count(self):
         wd = self.app.wd
-        self.app.open_home_page()
+        self.open_contact_page()
         return len(wd.find_elements_by_name("selected[]"))
 
     def change_field(self, field_name, text):
@@ -31,7 +36,7 @@ class ContactHelper:
 
     def create(self, contact):
         wd = self.app.wd
-        self.app.open_home_page()
+        self.open_contact_page()
         # init contact creation
         wd.find_element_by_link_text("add new").click()
         # fill contact form
@@ -40,7 +45,7 @@ class ContactHelper:
 
     def delete(self):
         wd = self.app.wd
-        self.app.open_home_page()
+        self.open_contact_page()
         # find exists contract's checkbox
         if not wd.find_element_by_name("selected[]").is_selected():
             wd.find_element_by_name("selected[]").click()
@@ -51,7 +56,7 @@ class ContactHelper:
 
     def modify(self, new_contact_data):
         wd = self.app.wd
-        self.app.open_home_page()
+        self.open_contact_page()
         wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img").click()
         self.fill_contact_form(new_contact_data)
         wd.find_element_by_xpath("//div[@id='content']/form[1]/input[22]").click()
