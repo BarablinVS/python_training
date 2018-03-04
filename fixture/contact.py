@@ -1,5 +1,6 @@
 __author__ = 'viktor'
 
+from model.contact import Contact
 
 class ContactHelper:
 
@@ -10,10 +11,6 @@ class ContactHelper:
         wd = self.app.wd
         if not (wd.current_url.endswith("addressbook/") and len(wd.find_elements_by_link_text("Send e-Mail")) > 0):
             wd.find_element_by_link_text("home").click()
-
-#    def open_add_contact_page(self):
-#       wd = self.app.wd
-#        wd.find_element_by_link_text("add new").click()
 
     def count(self):
         wd = self.app.wd
@@ -60,3 +57,15 @@ class ContactHelper:
         wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img").click()
         self.fill_contact_form(new_contact_data)
         wd.find_element_by_xpath("//div[@id='content']/form[1]/input[22]").click()
+
+    def get_contact_list(self):
+        wd = self.app.wd
+        self.open_contact_page()
+        contacts =[]
+        for element in wd.find_elements_by_name("entry"):
+            title = (element.find_element_by_name("selected[]").get_attribute("title")).split()
+            firstname = title[1].strip("(")
+            lastname = title[2].strip(")")
+            id = element.find_element_by_name("selected[]").get_attribute("value")
+            contacts.append(Contact(id=id, firstname=firstname, lastname=lastname))
+        return contacts
