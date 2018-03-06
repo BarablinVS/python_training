@@ -69,9 +69,9 @@ class ContactHelper:
             self.open_contact_page()
             self.contact_cache = []
             for element in wd.find_elements_by_name("entry"):
-                title = (element.find_element_by_name("selected[]").get_attribute("title")).split()
-                firstname = title[1].strip("(")
-                lastname = title[2].strip(")")
+                columns = element.find_elements_by_tag_name("td")
+                firstname = columns[2].text
+                lastname = columns[1].text
                 id = element.find_element_by_name("selected[]").get_attribute("value")
                 self.contact_cache.append(Contact(id=id, firstname=firstname, lastname=lastname))
         return list(self.contact_cache)
