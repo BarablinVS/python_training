@@ -31,6 +31,14 @@ class ContactHelper:
         self.change_field("home", contact.home_number)
         self.change_field("mobile", contact.mobile_number)
 
+    def select_first_contact(self):
+        wd = self.app.wd
+        wd.find_element_by_name("selected[]").click()
+
+    def select_contact_by_index(self, index):
+        wd = self.app.wd
+        wd.find_elements_by_name("selected[]")[index].click()
+
     def create(self, contact):
         wd = self.app.wd
         self.open_contact_page()
@@ -41,21 +49,26 @@ class ContactHelper:
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
         self.contact_cache = None
 
-    def delete(self):
+    def delete_first_contact(self):
+        self.delete_group_by_index(0)
+
+    def delete_contact_by_index(self, index):
         wd = self.app.wd
         self.open_contact_page()
-        # find exists contract's checkbox
-        if not wd.find_element_by_name("selected[]").is_selected():
-            wd.find_element_by_name("selected[]").click()
+        # select first group
+        self.select_contact_by_index(index)
         # click Delete button
         wd.find_element_by_xpath("//div[@id='content']/form[2]/div[2]/input").click()
-        # submit deletion
         wd.switch_to_alert().accept()
         self.contact_cache = None
 
-    def modify(self, new_contact_data):
+    def modify_first_contact(self):
+        self.modify_contact_by_index(0)
+
+    def modify_contact_by_index(self, index, new_contact_data):
         wd = self.app.wd
         self.open_contact_page()
+        self.select_contact_by_index(index)
         wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img").click()
         self.fill_contact_form(new_contact_data)
         wd.find_element_by_xpath("//div[@id='content']/form[1]/input[22]").click()
