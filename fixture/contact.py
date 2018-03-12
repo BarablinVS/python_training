@@ -39,6 +39,10 @@ class ContactHelper:
         wd = self.app.wd
         wd.find_elements_by_name("selected[]")[index].click()
 
+    def edit_contact_by_index(self, index):
+        wd = self.app.wd
+        wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr[" + str(2+index) + "]/td[8]/a/img").click()
+
     def create(self, contact):
         wd = self.app.wd
         self.open_contact_page()
@@ -62,14 +66,13 @@ class ContactHelper:
         wd.switch_to_alert().accept()
         self.contact_cache = None
 
-    def modify_first_contact(self):
-        self.modify_contact_by_index(0)
+    def modify_first_contact(self, new_contact_data):
+        self.modify_contact_by_index(0, new_contact_data)
 
     def modify_contact_by_index(self, index, new_contact_data):
         wd = self.app.wd
         self.open_contact_page()
-        self.select_contact_by_index(index)
-        wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img").click()
+        self.edit_contact_by_index(index)
         self.fill_contact_form(new_contact_data)
         wd.find_element_by_xpath("//div[@id='content']/form[1]/input[22]").click()
         self.contact_cache = None
