@@ -6,16 +6,16 @@ import string
 
 
 def random_string(prefix, maxlen):
-    symbols = string.ascii_letters + string.digits + string.punctuation + " "*10
+    symbols = string.ascii_letters + string.digits + " "*10
     return prefix + "".join([random.choice(symbols) for i in range(random.randrange(maxlen))])
 
 
-testdata = [Contact(firstname="", lastname="", home_number="", mobile_number="",
+testdata = [Contact(firstname="", lastname="", home_number="", mobile_number="", work_number="",
                     address="", email="", email2="", email3="")] + [
     Contact(firstname=random_string("firstname", 10), lastname=random_string("lastname", 10),
             home_number=random_string("home_number", 10), mobile_number=random_string("mobile_number", 10),
-            address=random_string("address", 20), email=random_string("email", 20), email2=random_string("email2", 20),
-            email3=random_string("email3", 20))
+            work_number=random_string("work_number", 10), address=random_string("address", 20),
+            email=random_string("email", 20), email2=random_string("email2", 20), email3=random_string("email3", 20))
     for i in range(5)
 ]
 

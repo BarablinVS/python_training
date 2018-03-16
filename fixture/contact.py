@@ -31,6 +31,7 @@ class ContactHelper:
         self.change_field("lastname", contact.lastname)
         self.change_field("home", contact.home_number)
         self.change_field("mobile", contact.mobile_number)
+        self.change_field("work", contact.work_number)
         self.change_field("address", contact.address)
         self.change_field("email", contact.email)
         self.change_field("email2", contact.email2)
@@ -119,11 +120,12 @@ class ContactHelper:
         id = wd.find_element_by_name("id").get_attribute("value")
         home_number = wd.find_element_by_name("home").get_attribute("value")
         mobile_number = wd.find_element_by_name("mobile").get_attribute("value")
+        work_number = wd.find_element_by_name("work").get_attribute("value")
         address = wd.find_element_by_name("address").get_attribute("value")
         email = wd.find_element_by_name("email").get_attribute("value")
         email2 = wd.find_element_by_name("email2").get_attribute("value")
         email3 = wd.find_element_by_name("email3").get_attribute("value")
-        return Contact(firstname=firstname, lastname=lastname, home_number=home_number,
+        return Contact(firstname=firstname, lastname=lastname, home_number=home_number, work_number=work_number,
                        address=address, email=email, email2=email2, email3=email3,
                        mobile_number=mobile_number, id=id)
 
