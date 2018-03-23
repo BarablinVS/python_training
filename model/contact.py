@@ -20,7 +20,7 @@ class Contact:
         self.id = id
 
     def __repr__(self):
-        return "%s:%s:%s:%s:%s:%s:%s:%s:%s%s" % (self.id, self.firstname, self.lastname, self.home_number,
+        return "%s:%s:%s:%s:%s:%s:%s:%s:%s:%s" % (self.id, self.firstname, self.lastname, self.home_number,
                                                self.mobile_number, self.work_number, self.address,
                                                self.email, self.email2, self.email3)
 

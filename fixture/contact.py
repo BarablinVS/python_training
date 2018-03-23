@@ -94,6 +94,7 @@ class ContactHelper:
 
     contact_cache = None
 
+
     def get_contact_list(self):
         if self.contact_cache is None:
             wd = self.app.wd
@@ -107,9 +108,31 @@ class ContactHelper:
                 id = element.find_element_by_name("selected[]").get_attribute("value")
                 all_emails = columns[4].text
                 all_phones = columns[5].text
+                if len(all_phones.splitlines()) == 3:
+                    home_number = all_phones.splitlines()[0]
+                    mobile_number = all_phones.splitlines()[1]
+                    work_number = all_phones.splitlines()[2]
+                else:
+                    home_number=''
+                    mobile_number=''
+                    work_number=''
+
+                if len(all_emails.splitlines()) == 3:
+                    email = all_emails.splitlines()[0]
+                    email2 = all_emails.splitlines()[1]
+                    email3 = all_emails.splitlines()[2]
+                else:
+                    email = ''
+                    email2 = ''
+                    email3 = ''
+
                 self.contact_cache.append(Contact(id=id, firstname=firstname, lastname=lastname,
-                                                  address=address, all_phones_from_home_page=all_phones,
-                                                  all_emails_from_home_page=all_emails))
+                                                  address=address, all_phones_from_home_page=all_phones, home_number=home_number,
+                                                  mobile_number=mobile_number, work_number=work_number,
+                                                  all_emails_from_home_page=all_emails,
+                                                  email=email,
+                                                  email2=email2, email3=email3))
+
         return list(self.contact_cache)
 
     def get_contact_info_from_edit_page(self, index):
