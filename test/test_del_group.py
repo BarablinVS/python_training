@@ -1,6 +1,7 @@
 __author__ = 'viktor'
 from model.group import Group
 import random
+import time
 
 
 def test_delete_some_group(app, db, check_ui):
