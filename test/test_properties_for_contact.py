@@ -1,26 +1,13 @@
-import re
-from random import randrange
+from model.contact import Contact
 
 
-def test_properties_on_home_page(app):
-    contacts = app.contact.get_contact_list()
-    index = randrange(len(contacts))
-    contact_from_home_page = app.contact.get_contact_list()[index]
-    contact_from_edit_page = app.contact.get_contact_info_from_edit_page(index)
-    assert contact_from_home_page.firstname == contact_from_edit_page.firstname
-    assert contact_from_home_page.lastname == contact_from_edit_page.lastname
-    assert contact_from_home_page.address == contact_from_edit_page.address
-    assert contact_from_home_page.all_phones_from_home_page == merge_properties_like_on_home_page\
-        ([contact_from_edit_page.home_number, contact_from_edit_page.mobile_number])
-    assert contact_from_home_page.all_emails_from_home_page == merge_properties_like_on_home_page\
-        ([contact_from_edit_page.email, contact_from_edit_page.email2, contact_from_edit_page.email3])
+def test_properties_on_home_page(app, db):
+    contact_from_home_page = app.contact.get_contact_list()
+    contact_from_db = db.get_contact_list()
+    def clean(contact):
+        return Contact(id=contact.id, firstname=contact.firstname.strip(), lastname=contact.lastname.strip())
+    db_list = map(clean, contact_from_db)
+    assert sorted(db_list, key=Contact.id_or_max) == sorted(contact_from_home_page, key=Contact.id_or_max)
 
 
-def clear(s):
-    return re.sub("[() -]", "", s)
 
-
-def merge_properties_like_on_home_page(params):
-    return "\n".join(filter(lambda x: x != "",
-                            map(lambda x: clear(x),
-                                filter(lambda x: x is not None, params))))
