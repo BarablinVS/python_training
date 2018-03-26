@@ -73,6 +73,21 @@ class ContactHelper:
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
         self.contact_cache = None
 
+
+    def add_contact_in_group(self, contact_id, group_id):
+        wd = self.app.wd
+        self.open_contact_page()
+        self.select_contact_by_id(contact_id)
+        wd.find_element_by_xpath("//select[@name='to_group']/option[@value=" + group_id + "]").click()
+        wd.find_element_by_name("add").click()
+
+    def delete_contact_from_group(self, contact_id, group_id):
+        wd = self.app.wd
+        self.open_contact_page()
+        wd.find_element_by_xpath("//select[@name='group']/option[@value=" + group_id + "]").click()
+        self.select_contact_by_id(contact_id)
+        wd.find_element_by_name("remove").click()
+
     def delete_first_contact(self):
         self.delete_group_by_index(0)
 
